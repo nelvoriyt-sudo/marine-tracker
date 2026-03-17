@@ -8,7 +8,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800;900&family=Barlow:wght@400;500;600&display=swap');
 :root{
-  --bg:#0a0a0c;--bg2:#111114;--bg3:#18181d;--bg4:#1e1e24;--bg5:#252530;
+  --bg:#0a0a0c;--bg2:#111114;--card-grad:linear-gradient(135deg,#141418 0%,#111114 50%,#0f0f12 100%);--bg3:#18181d;--bg4:#1e1e24;--bg5:#252530;
   --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.11);
   --text:#edecea;--text2:#96948e;--text3:#504e49;
   --gold:#c4a44a;--gold2:#dfc06e;--gold3:#f0d898;
@@ -21,7 +21,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{height:100%}
-body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;padding-bottom:64px;min-height:100vh;overflow-x:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;padding-bottom:72px;min-height:100vh;overflow-x:hidden;overscroll-behavior:none}
 
 .hdr{position:sticky;top:0;z-index:50;background:rgba(10,10,12,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:13px 18px 11px}
 .hdr-inner{display:flex;align-items:center;justify-content:space-between}
@@ -31,18 +31,18 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font
 .phase-pill{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:20px;background:var(--gold-bg);border:1px solid var(--gold-border);color:var(--gold);line-height:1}
 .week-pill{font-size:10px;color:var(--text3);font-weight:500}
 .bnav{position:fixed;bottom:0;left:0;right:0;z-index:50;background:rgba(10,10,12,0.97);backdrop-filter:blur(12px);border-top:1px solid var(--border);display:flex}
-.nb{flex:1;padding:10px 2px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:none;background:transparent;color:var(--text3);cursor:pointer;transition:color .2s;position:relative}
+.nb{flex:1;padding:12px 2px 16px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:none;background:transparent;color:var(--text3);cursor:pointer;transition:color .2s;position:relative}
 .nb.on{color:var(--gold)}
 .nb.on::after{content:'';position:absolute;top:0;left:25%;right:25%;height:1.5px;background:var(--gold);border-radius:2px}
 .nb:active{transform:scale(.85);transition:transform .1s}
 .nb-ico{font-size:17px;line-height:1}
-.nb-svg{width:20px;height:20px;display:block;margin:0 auto}
+.nb-svg{width:22px;height:22px;display:block;margin:0 auto}
 .pg{display:none;padding:16px 16px 8px;opacity:0;position:relative;z-index:1}
 .pg.on{display:block;opacity:1}
 .pg-title{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px}
 .pg-sub{font-size:12px;color:var(--text2);margin-bottom:16px;line-height:1.6}
 .sec-lbl{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--text3);margin:16px 0 8px}
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r3);padding:14px 16px;margin-bottom:10px}
+.card{background:var(--card-grad);border:1px solid var(--border);border-radius:var(--r3);padding:14px 16px;margin-bottom:10px}
 .badge{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:20px}
 .bg-gold{background:var(--gold-bg);color:var(--gold2);border:1px solid var(--gold-border)}
 .bg-blue{background:var(--blue-bg);color:var(--blue2);border:1px solid var(--blue-border)}
@@ -81,7 +81,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .wk-arr{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);color:var(--text);font-size:15px;width:34px;height:34px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .wk-arr:active{background:var(--bg4)}
 .day-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:8px}
-.day-card{border-radius:var(--r2);border:1px solid var(--border);background:var(--bg3);padding:10px 8px;cursor:pointer;transition:all .15s;text-align:center;display:flex;flex-direction:column;align-items:center;gap:5px}
+.day-card{border-radius:var(--r2);border:1px solid var(--border);background:linear-gradient(145deg,#1c1c22 0%,#18181d 100%);padding:10px 8px;cursor:pointer;transition:all .15s;text-align:center;display:flex;flex-direction:column;align-items:center;gap:5px}
 .day-card:active{transform:scale(.97)}
 .day-card.done{background:var(--green-bg);border-color:var(--green-border)}
 .day-card.rest-day{opacity:.45;cursor:default}
@@ -226,7 +226,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 </head>
 <body>
 
-<canvas id="bgc" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none"></canvas>
+<canvas id="bgc" style="position:fixed;top:-50px;left:0;width:100%;height:calc(100% + 100px);z-index:0;pointer-events:none"></canvas>
 <div class="hdr">
   <div class="hdr-inner">
     <div><div class="hdr-title">Marine Tracker</div><div class="hdr-sub">12-Week Program</div></div>
@@ -450,7 +450,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <button class="nb" onclick="nav('sched',this)">
     <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="13" rx="2"/><path d="M7 2v4M13 2v4M3 9h14"/></svg></button>
   <button class="nb" onclick="nav('train',this)">
-    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 10h3M15 10h3M5 10a5 5 0 0010 0M5 10a5 5 0 0110 0M8 10V7m4 3V7"/></svg></button>
+    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="8.5" width="2.5" height="3" rx=".5"/><rect x="3.5" y="7" width="2" height="6" rx=".5"/><line x1="5.5" y1="10" x2="14.5" y2="10"/><rect x="14.5" y="7" width="2" height="6" rx=".5"/><rect x="16.5" y="8.5" width="2.5" height="3" rx=".5"/></svg></button>
   <button class="nb" onclick="nav('progress',this)">
     <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,14 7,9 11,12 18,5"/><polyline points="14,5 18,5 18,9"/></svg></button>
   <button class="nb" onclick="nav('run',this)">
@@ -458,7 +458,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <button class="nb" onclick="nav('weight',this)">
     <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h8l1 9H5L6 7z"/><path d="M8 7V5a2 2 0 014 0v2"/></svg></button>
   <button class="nb" onclick="nav('nut',this)">
-    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3c0 0-6 4-6 8a6 6 0 0012 0c0-4-6-8-6-8z"/><path d="M10 3v14"/></svg></button>
+    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 18v-8"/><path d="M10 13c0 0-1-4-5-4 0 4 3 5 5 4"/><path d="M10 10c0 0 1-4 5-4 0 4-3 5-5 4"/></svg></button>
   <button class="nb" onclick="nav('journal',this)">
     <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h10a1 1 0 011 1v13l-3-2-3 2-3-2-3 2V4a1 1 0 011-1z"/><path d="M8 8h4M8 11h3"/></svg></button>
   <button class="nb" onclick="nav('rules',this)">
@@ -1259,54 +1259,49 @@ setTimeout(function(){
 },50);
 
 
-// ── ANIMATED BACKGROUND ──
-window.addEventListener('load', function(){
-  var c = document.getElementById('bgc');
-  if(!c) return;
-  var ctx = c.getContext('2d');
-  var W, H, t = 0;
-  function resize(){
-    W = c.width = window.innerWidth;
-    H = c.height = window.innerHeight;
-  }
+// ── ANIMATED BACKGROUND WAVES ──
+window.addEventListener('load',function(){
+  var c=document.getElementById('bgc');
+  if(!c)return;
+  var ctx=c.getContext('2d');
+  var W,H;
+  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight+100;}
   resize();
-  window.addEventListener('resize', resize);
-
-  // Wave definitions: [yRatio, amplitude, xFreq, timeSpeed, phaseOffset, opacity]
-  var waves = [
-    [0.12, 30, 0.009, 0.4, 0.0,  0.06],
-    [0.15, 22, 0.012, 0.3, 1.8,  0.045],
-    [0.18, 16, 0.007, 0.5, 3.4,  0.03],
-    [0.38, 38, 0.008, 0.35, 0.9, 0.065],
-    [0.41, 28, 0.010, 0.45, 2.3, 0.05],
-    [0.44, 18, 0.006, 0.3,  4.1, 0.035],
-    [0.65, 32, 0.009, 0.4,  1.5, 0.055],
-    [0.68, 24, 0.011, 0.5,  3.0, 0.04],
-    [0.84, 20, 0.008, 0.35, 0.6, 0.045],
-    [0.87, 14, 0.010, 0.4,  2.2, 0.03],
+  window.addEventListener('resize',resize);
+  var waves=[
+    {y:.08,amp:22,wl:.6,spd:.0008,ph:0,op:.055,lw:1.0},
+    {y:.11,amp:16,wl:.5,spd:.0006,ph:2.1,op:.04,lw:.8},
+    {y:.14,amp:12,wl:.7,spd:.001,ph:4.3,op:.03,lw:.7},
+    {y:.35,amp:28,wl:.55,spd:.0007,ph:1.0,op:.06,lw:1.0},
+    {y:.38,amp:20,wl:.65,spd:.0009,ph:3.2,op:.045,lw:.8},
+    {y:.41,amp:14,wl:.5,spd:.0006,ph:5.5,op:.03,lw:.7},
+    {y:.62,amp:26,wl:.6,spd:.0008,ph:.7,op:.055,lw:1.0},
+    {y:.65,amp:18,wl:.7,spd:.0007,ph:2.8,op:.04,lw:.8},
+    {y:.82,amp:20,wl:.55,spd:.0006,ph:1.5,op:.045,lw:.9},
+    {y:.85,amp:13,wl:.65,spd:.0009,ph:3.9,op:.03,lw:.7}
   ];
-
-  function draw(){
-    ctx.clearRect(0, 0, W, H);
-    t += 0.012;
+  var last=0;
+  function draw(ts){
+    requestAnimationFrame(draw);
+    var dt=ts-last;last=ts;
+    if(dt>100)dt=16;
+    ctx.clearRect(0,0,W,H);
     waves.forEach(function(w){
-      var baseY=w[0]*H, amp=w[1], xf=w[2], spd=w[3], ph=w[4], op=w[5];
+      w.ph+=w.spd*dt;
+      var baseY=w.y*H;
+      var freq=(2*Math.PI)/(W*w.wl);
       ctx.beginPath();
-      ctx.strokeStyle = 'rgba(196,164,74,' + op + ')';
-      ctx.lineWidth = 1.2;
-      ctx.lineJoin = 'round';
-      for(var x = 0; x <= W; x += 4){
-        var y = baseY
-          + Math.sin(x * xf + t * spd + ph) * amp
-          + Math.sin(x * xf * 0.6 + t * spd * 0.7 + ph + 1.1) * amp * 0.45
-          + Math.sin(x * xf * 0.3 + t * spd * 1.3 + ph + 2.3) * amp * 0.2;
-        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      ctx.strokeStyle='rgba(196,164,74,'+w.op+')';
+      ctx.lineWidth=w.lw;
+      ctx.lineJoin='round';
+      for(var x=0;x<=W;x+=3){
+        var y=baseY+Math.sin(x*freq+w.ph)*w.amp+Math.sin(x*freq*1.7+w.ph*.8)*w.amp*.35+Math.sin(x*freq*.4+w.ph*1.3)*w.amp*.2;
+        if(x===0){ctx.moveTo(x,y);}else{ctx.lineTo(x,y);}
       }
       ctx.stroke();
     });
-    requestAnimationFrame(draw);
   }
-  draw();
+  requestAnimationFrame(draw);
 });
 
 </script>
