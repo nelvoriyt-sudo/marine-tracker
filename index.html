@@ -21,7 +21,8 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{height:100%}
-body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;padding-bottom:76px;min-height:100vh;overflow-x:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;padding-bottom:64px;min-height:100vh;overflow-x:hidden}
+
 .hdr{position:sticky;top:0;z-index:50;background:rgba(10,10,12,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:13px 18px 11px}
 .hdr-inner{display:flex;align-items:center;justify-content:space-between}
 .hdr-title{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;color:var(--gold);line-height:1}
@@ -30,13 +31,14 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font
 .phase-pill{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:20px;background:var(--gold-bg);border:1px solid var(--gold-border);color:var(--gold);line-height:1}
 .week-pill{font-size:10px;color:var(--text3);font-weight:500}
 .bnav{position:fixed;bottom:0;left:0;right:0;z-index:50;background:rgba(10,10,12,0.97);backdrop-filter:blur(12px);border-top:1px solid var(--border);display:flex}
-.nb{flex:1;padding:8px 2px 12px;display:flex;flex-direction:column;align-items:center;gap:3px;border:none;background:transparent;color:var(--text3);font-family:'Barlow',sans-serif;font-size:9px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;transition:color .15s;position:relative}
+.nb{flex:1;padding:10px 2px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:none;background:transparent;color:var(--text3);cursor:pointer;transition:color .2s;position:relative}
 .nb.on{color:var(--gold)}
-.nb.on::after{content:'';position:absolute;top:0;left:20%;right:20%;height:1px;background:var(--gold)}
+.nb.on::after{content:'';position:absolute;top:0;left:25%;right:25%;height:1.5px;background:var(--gold);border-radius:2px}
+.nb:active{transform:scale(.85);transition:transform .1s}
 .nb-ico{font-size:17px;line-height:1}
-.nb-svg{width:18px;height:18px;display:block;margin:0 auto 1px}
-.pg{display:none;padding:16px 16px 8px}
-.pg.on{display:block}
+.nb-svg{width:20px;height:20px;display:block;margin:0 auto}
+.pg{display:none;padding:16px 16px 8px;opacity:0;position:relative;z-index:1}
+.pg.on{display:block;opacity:1}
 .pg-title{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px}
 .pg-sub{font-size:12px;color:var(--text2);margin-bottom:16px;line-height:1.6}
 .sec-lbl{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--text3);margin:16px 0 8px}
@@ -173,13 +175,58 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .divider{height:1px;background:var(--border);margin:16px 0}
 .empty{text-align:center;padding:32px 16px;color:var(--text3);font-size:13px;line-height:1.7}
 .view-all-btn{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);background:none;border:none;cursor:pointer;padding:4px 0;display:block;text-align:center;width:100%;margin-top:4px}
-.toast{position:fixed;bottom:84px;left:50%;transform:translateX(-50%) scale(.92);background:var(--green);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;padding:8px 20px;border-radius:20px;z-index:200;opacity:0;transition:all .22s;pointer-events:none;white-space:nowrap}
-.toast.show{opacity:1;transform:translateX(-50%) scale(1)}
+
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 25% at 50% 0%, rgba(196,164,74,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 100% 30% at 50% 105%, rgba(20,14,4,0.35) 0%, transparent 65%);
+}
+/* BG effects */
+.hdr,.pg{position:relative;z-index:1}
+.bnav{position:fixed!important;bottom:0;left:0;right:0;z-index:50}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes checkPop{0%{transform:scale(1)}35%{transform:scale(1.06)}65%{transform:scale(.98)}100%{transform:scale(1)}}
+@keyframes statIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+.pg.on{animation:fadeIn .35s cubic-bezier(.25,.46,.45,.94) both}
+.page-slide .card{animation:slideUp .45s cubic-bezier(.25,.46,.45,.94) both}
+.page-slide .card:nth-child(1){animation-delay:.03s}
+.page-slide .card:nth-child(2){animation-delay:.07s}
+.page-slide .card:nth-child(3){animation-delay:.11s}
+.page-slide .card:nth-child(4){animation-delay:.15s}
+.page-slide .card:nth-child(5){animation-delay:.19s}
+.page-slide .card:nth-child(6){animation-delay:.23s}
+.day-card.pop{animation:checkPop .5s cubic-bezier(.25,.46,.45,.94)}
+.stat-anim{animation:statIn .5s cubic-bezier(.25,.46,.45,.94) both}
+.pr-card{animation:slideUp .45s cubic-bezier(.25,.46,.45,.94) both}
+.pr-card:nth-child(1){animation-delay:.05s}
+.pr-card:nth-child(2){animation-delay:.1s}
+.pr-card:nth-child(3){animation-delay:.15s}
+
+.btn,.wk-arr,.add-set-btn,.view-all-btn,.ptab{transition:transform .16s cubic-bezier(.25,.46,.45,.94),opacity .16s}
+.btn:active,.add-set-btn:active,.view-all-btn:active{transform:scale(.97);opacity:.88}
+.btn-gold:active{transform:scale(.97);opacity:.92}
+.wk-arr:active{transform:scale(.93)}
+.ptab:active{transform:scale(.96)}
+.del-set-btn{transition:transform .14s cubic-bezier(.25,.46,.45,.94)}
+.del-set-btn:active{transform:scale(.85)}
+.nb-btn:active{transform:scale(.92)}
+.day-card{transition:background .25s ease,border-color .25s ease,transform .2s cubic-bezier(.25,.46,.45,.94)}
+.day-card:not(.rest-day):active{transform:scale(.94)}
+.nb{transition:color .25s ease,transform .16s cubic-bezier(.25,.46,.45,.94)}
+.nb:active{transform:scale(.88)}
+
+.toast{position:fixed;bottom:76px;left:50%;transform:translateX(-50%) translateY(10px);background:#38855a;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;padding:9px 22px;border-radius:30px;z-index:999;opacity:0;transition:opacity .3s ease,transform .3s cubic-bezier(.25,.46,.45,.94);pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.4)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .note-bar{background:var(--blue-bg);border:1px solid var(--blue-border);border-radius:var(--r);padding:9px 12px;font-size:12px;color:var(--blue2);margin-bottom:10px;line-height:1.5}
 </style>
 </head>
 <body>
 
+<canvas id="bgc" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none"></canvas>
 <div class="hdr">
   <div class="hdr-inner">
     <div><div class="hdr-title">Marine Tracker</div><div class="hdr-sub">12-Week Program</div></div>
@@ -192,9 +239,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 
 <!-- DASHBOARD -->
 <div id="pg-dash" class="pg on">
-  <div id="dash-greeting" style="margin-bottom:18px;text-align:center"></div>
-  <div class="pg-title">Dashboard</div>
-  <div class="pg-sub">Your week at a glance. Tap a day to mark it done.</div>
+  <div id="dash-greeting" style="margin-bottom:20px;text-align:center;padding-top:4px"></div>
   <div class="wk-nav">
     <button class="wk-arr" onclick="chWk(-1)">&#8592;</button>
     <span class="wk-lbl" id="wk-lbl">Week 1</span>
@@ -204,7 +249,10 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
   <div id="wk-summary" style="font-size:11px;color:var(--text2);text-align:center;margin-bottom:8px"></div>
   <button class="btn btn-ghost" onclick="markToday()">Mark Today Complete</button>
   <div class="divider"></div>
-  <div class="sec-lbl" style="display:flex;align-items:center;justify-content:space-between">Weight <button onclick="nav('weight',document.querySelectorAll('.nb')[5])" style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);background:none;border:none;cursor:pointer">Log weight &#8594;</button></div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+    <span class="sec-lbl" style="margin:0">Weight</span>
+    <button onclick="nav('weight',document.querySelectorAll('.nb')[5])" style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);background:none;border:none;cursor:pointer">Log weight &#8594;</button>
+  </div>
   <div id="dash-weight-card" style="margin-bottom:12px"></div>
   <div class="sec-lbl">Personal Records</div>
   <div class="pr-grid" id="pr-grid"></div>
@@ -398,32 +446,23 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 
 <nav class="bnav">
   <button class="nb on" onclick="nav('dash',this)">
-    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
-    Dash</button>
+    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg></button>
   <button class="nb" onclick="nav('sched',this)">
-    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="13" rx="2"/><path d="M7 2v4M13 2v4M3 9h14"/></svg>
-    Schedule</button>
+    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="13" rx="2"/><path d="M7 2v4M13 2v4M3 9h14"/></svg></button>
   <button class="nb" onclick="nav('train',this)">
-    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 10h3M15 10h3M5 10a5 5 0 0010 0M5 10a5 5 0 0110 0M8 10V7m4 3V7"/></svg>
-    Training</button>
+    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 10h3M15 10h3M5 10a5 5 0 0010 0M5 10a5 5 0 0110 0M8 10V7m4 3V7"/></svg></button>
   <button class="nb" onclick="nav('progress',this)">
-    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,14 7,9 11,12 18,5"/><polyline points="14,5 18,5 18,9"/></svg>
-    Progress</button>
+    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,14 7,9 11,12 18,5"/><polyline points="14,5 18,5 18,9"/></svg></button>
   <button class="nb" onclick="nav('run',this)">
-    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="11" r="6"/><path d="M10 8v3l2 1.5"/><path d="M8 2h4M10 2v3"/></svg>
-    Runs</button>
+    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="11" r="6"/><path d="M10 8v3l2 1.5"/><path d="M8 2h4M10 2v3"/></svg></button>
   <button class="nb" onclick="nav('weight',this)">
-    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h8l1 9H5L6 7z"/><path d="M8 7V5a2 2 0 014 0v2"/></svg>
-    Weight</button>
+    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h8l1 9H5L6 7z"/><path d="M8 7V5a2 2 0 014 0v2"/></svg></button>
   <button class="nb" onclick="nav('nut',this)">
-    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3c0 0-6 4-6 8a6 6 0 0012 0c0-4-6-8-6-8z"/><path d="M10 3v14"/></svg>
-    Nutrition</button>
+    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3c0 0-6 4-6 8a6 6 0 0012 0c0-4-6-8-6-8z"/><path d="M10 3v14"/></svg></button>
   <button class="nb" onclick="nav('journal',this)">
-    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h10a1 1 0 011 1v13l-3-2-3 2-3-2-3 2V4a1 1 0 011-1z"/><path d="M8 8h4M8 11h3"/></svg>
-    Journal</button>
+    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h10a1 1 0 011 1v13l-3-2-3 2-3-2-3 2V4a1 1 0 011-1z"/><path d="M8 8h4M8 11h3"/></svg></button>
   <button class="nb" onclick="nav('rules',this)">
-    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.5"/><path d="M10 10V6.5"/><circle cx="10" cy="13.5" r=".75" fill="currentColor"/></svg>
-    Rules</button>
+    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.5"/><path d="M10 10V6.5"/><circle cx="10" cy="13.5" r=".75" fill="currentColor"/></svg></button>
 </nav>
 
 <div class="toast" id="toast"></div>
@@ -438,9 +477,18 @@ function curPhase(){return S.trainPhase||getPhaseFromWeek(S.week||1);}
 function toast(m,c){var t=document.getElementById('toast');t.textContent=m;t.style.background=c||'var(--green)';t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2000);}
 
 function nav(id,btn){
-  document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on');});
+  document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on','page-slide');});
   document.querySelectorAll('.nb').forEach(function(b){b.classList.remove('on');});
-  document.getElementById('pg-'+id).classList.add('on');
+  var pg=document.getElementById('pg-'+id);
+  pg.classList.add('on');
+  var staticPages=['dash','sched','nut','rules','train'];
+  if(staticPages.indexOf(id)!==-1){
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        pg.classList.add('page-slide');
+      });
+    });
+  }
   if(btn)btn.classList.add('on');
   updateHdr();
   if(id==='dash')renderDash();
@@ -517,12 +565,22 @@ function renderDayGrid(){
 function toggleDay(i){
   var key='w'+(S.week||1)+'d'+i;
   S.days[key]=!S.days[key];save();renderDayGrid();
-  if(S.days[key])toast('Day marked done');
+  if(S.days[key]){
+    toast('Day marked done');
+    setTimeout(function(){
+      var cards=document.querySelectorAll('.day-card');
+      if(cards[i]){cards[i].classList.add('pop');setTimeout(function(){cards[i].classList.remove('pop');},400);}
+    },10);
+  }
 }
 function markToday(){
   var d=new Date().getDay(),i=d===0?6:d-1;
   if(i===6){toast('Sunday is rest','var(--blue)');return;}
   S.days['w'+(S.week||1)+'d'+i]=true;save();renderDayGrid();toast('Today marked complete');
+  setTimeout(function(){
+    var cards=document.querySelectorAll('.day-card');
+    if(cards[i]){cards[i].classList.add('pop');setTimeout(function(){cards[i].classList.remove('pop');},400);}
+  },10);
 }
 
 var PR_LIFTS=['Bench Press','Pushups','Pullups'];
@@ -540,14 +598,29 @@ function getBestLift(name){
   });
   return best;
 }
+function animateCount(el, target){
+  if(target==='—'||target===0){el.textContent=target||'—';return;}
+  var start=0,dur=600,step=Math.ceil(target/30);
+  var timer=setInterval(function(){
+    start+=step;
+    if(start>=target){start=target;clearInterval(timer);}
+    el.textContent=start;
+  },dur/30);
+}
 function renderPRGrid(){
   var grid=document.getElementById('pr-grid');if(!grid)return;
   grid.innerHTML=PR_LIFTS.map(function(name){
     var val=getBestLift(name),unit=(name==='Pushups'||name==='Pullups')?'reps':'lbs';
     return '<div class="pr-card"><div class="pr-name">'+name+'</div>'+
-      '<div class="pr-val">'+(val>0?val:'—')+'</div>'+
+      '<div class="pr-val stat-anim" data-val="'+(val>0?val:0)+'">'+(val>0?val:'—')+'</div>'+
       '<div class="pr-unit">'+(val>0?'best '+unit:'not yet')+'</div></div>';
   }).join('');
+  if(grid.querySelectorAll('.pr-val[data-val]')){
+    grid.querySelectorAll('.pr-val[data-val]').forEach(function(el){
+      var v=parseInt(el.getAttribute('data-val'));
+      if(v>0)animateCount(el,v);
+    });
+  }
 }
 function renderDashRuns(){
   var el=document.getElementById('dash-runs');if(!el)return;
@@ -1070,8 +1143,8 @@ function renderDashWeightCard(){
   var diff=(latest.lbs-start.lbs).toFixed(1);
   var isDown=parseFloat(diff)<0;
   el.innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">'+
-    '<div class="sbox"><div class="sbox-lbl">Current</div><div class="sbox-val gold">'+latest.lbs+'</div><div class="sbox-note">lbs</div></div>'+
-    '<div class="sbox"><div class="sbox-lbl">Starting</div><div class="sbox-val">'+start.lbs+'</div><div class="sbox-note">lbs</div></div>'+
+    '<div class="sbox"><div class="sbox-lbl">Current</div><div class="sbox-val gold stat-anim">'+latest.lbs+'</div><div class="sbox-note">lbs</div></div>'+
+    '<div class="sbox"><div class="sbox-lbl">Starting</div><div class="sbox-val stat-anim">'+start.lbs+'</div><div class="sbox-note">lbs</div></div>'+
     '<div class="sbox"><div class="sbox-lbl">Change</div><div class="sbox-val '+(isDown?'green':'red')+'">'+(isDown?'':'+')+ diff+'</div><div class="sbox-note">lbs total</div></div>'+
   '</div>';
 }
@@ -1180,6 +1253,62 @@ updateNutBadges();
 renderDashWeightCard();
 syncPhaseTabs();
 schedPhase=getPhaseFromWeek(S.week||1);setSchedPhase(schedPhase);
+setTimeout(function(){
+  var pg=document.getElementById('pg-dash');
+  if(pg)pg.classList.add('page-slide');
+},50);
+
+
+// ── ANIMATED BACKGROUND ──
+window.addEventListener('load', function(){
+  var c = document.getElementById('bgc');
+  if(!c) return;
+  var ctx = c.getContext('2d');
+  var W, H, t = 0;
+  function resize(){
+    W = c.width = window.innerWidth;
+    H = c.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Wave definitions: [yRatio, amplitude, xFreq, timeSpeed, phaseOffset, opacity]
+  var waves = [
+    [0.12, 30, 0.009, 0.4, 0.0,  0.06],
+    [0.15, 22, 0.012, 0.3, 1.8,  0.045],
+    [0.18, 16, 0.007, 0.5, 3.4,  0.03],
+    [0.38, 38, 0.008, 0.35, 0.9, 0.065],
+    [0.41, 28, 0.010, 0.45, 2.3, 0.05],
+    [0.44, 18, 0.006, 0.3,  4.1, 0.035],
+    [0.65, 32, 0.009, 0.4,  1.5, 0.055],
+    [0.68, 24, 0.011, 0.5,  3.0, 0.04],
+    [0.84, 20, 0.008, 0.35, 0.6, 0.045],
+    [0.87, 14, 0.010, 0.4,  2.2, 0.03],
+  ];
+
+  function draw(){
+    ctx.clearRect(0, 0, W, H);
+    t += 0.012;
+    waves.forEach(function(w){
+      var baseY=w[0]*H, amp=w[1], xf=w[2], spd=w[3], ph=w[4], op=w[5];
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(196,164,74,' + op + ')';
+      ctx.lineWidth = 1.2;
+      ctx.lineJoin = 'round';
+      for(var x = 0; x <= W; x += 4){
+        var y = baseY
+          + Math.sin(x * xf + t * spd + ph) * amp
+          + Math.sin(x * xf * 0.6 + t * spd * 0.7 + ph + 1.1) * amp * 0.45
+          + Math.sin(x * xf * 0.3 + t * spd * 1.3 + ph + 2.3) * amp * 0.2;
+        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+});
+
 </script>
 </body>
 </html>
