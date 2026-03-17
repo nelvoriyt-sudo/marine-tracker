@@ -21,9 +21,9 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{height:100%}
-body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;padding-bottom:72px;min-height:100vh;overflow-x:hidden;overscroll-behavior:none}
+html{background:var(--bg);overscroll-behavior:none}body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;padding-bottom:72px;min-height:100vh;overflow-x:hidden;overscroll-behavior:none}
 
-.hdr{position:sticky;top:0;z-index:50;background:rgba(10,10,12,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:13px 18px 11px}
+.hdr{position:sticky;top:0;z-index:50;background:rgba(10,10,12,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:13px 18px 11px;margin-top:-50px;padding-top:63px}
 .hdr-inner{display:flex;align-items:center;justify-content:space-between}
 .hdr-title{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;color:var(--gold);line-height:1}
 .hdr-sub{font-size:10px;color:var(--text3);letter-spacing:.09em;text-transform:uppercase;margin-top:2px}
@@ -185,7 +185,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .hdr,.pg{position:relative;z-index:1}
 .bnav{position:fixed!important;bottom:0;left:0;right:0;z-index:50}
 
-/* ── ANIMATIONS ── */
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes checkPop{0%{transform:scale(1)}35%{transform:scale(1.06)}65%{transform:scale(.98)}100%{transform:scale(1)}}
@@ -219,6 +218,13 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .nb{transition:color .25s ease,transform .16s cubic-bezier(.25,.46,.45,.94)}
 .nb:active{transform:scale(.88)}
 
+.phase-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.85);background:var(--bg2);border:1px solid var(--gold-border);border-radius:var(--r3);padding:24px 32px;z-index:300;opacity:0;transition:all .4s cubic-bezier(.25,.46,.45,.94);pointer-events:none;text-align:center;min-width:200px}
+.phase-popup.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.phase-popup-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.phase-popup-title{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;text-transform:uppercase;letter-spacing:.05em;color:var(--text);line-height:1}
+.phase-popup-sub{font-size:12px;color:var(--text2);margin-top:6px}
+.phase-popup-overlay{position:fixed;inset:0;z-index:299;background:rgba(0,0,0,.4);opacity:0;transition:opacity .4s;pointer-events:none}
+.phase-popup-overlay.show{opacity:1}
 .toast{position:fixed;bottom:76px;left:50%;transform:translateX(-50%) translateY(10px);background:#38855a;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;padding:9px 22px;border-radius:30px;z-index:999;opacity:0;transition:opacity .3s ease,transform .3s cubic-bezier(.25,.46,.45,.94);pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.4)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .note-bar{background:var(--blue-bg);border:1px solid var(--blue-border);border-radius:var(--r);padding:9px 12px;font-size:12px;color:var(--blue2);margin-bottom:10px;line-height:1.5}
@@ -237,7 +243,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   </div>
 </div>
 
-<!-- DASHBOARD -->
 <div id="pg-dash" class="pg on">
   <div id="dash-greeting" style="margin-bottom:20px;text-align:center;padding-top:4px"></div>
   <div class="wk-nav">
@@ -263,7 +268,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <button class="view-all-btn" onclick="nav('run',document.querySelectorAll('.nb')[4])">View all runs &#8594;</button>
 </div>
 
-<!-- SCHEDULE -->
 <div id="pg-sched" class="pg">
   <div class="pg-title">Schedule</div>
   <div class="pg-sub">Your weekly training layout. 11am every day. Sunday is full rest.</div>
@@ -275,7 +279,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div id="sched-cards"></div>
 </div>
 
-<!-- TRAINING -->
 <div id="pg-train" class="pg">
   <div class="pg-title">Training</div>
   <div class="pg-sub">Select your phase and day. Log weights and reps per set. New sets copy the last set automatically.</div>
@@ -298,7 +301,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div id="ex-cards"></div>
 </div>
 
-<!-- PROGRESS -->
 <div id="pg-progress" class="pg">
   <div class="pg-title">Progress</div>
   <div class="pg-sub">Pulled automatically from your training logs.</div>
@@ -324,7 +326,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div id="all-prs"></div>
 </div>
 
-<!-- RUNS -->
 <div id="pg-run" class="pg">
   <div class="pg-title">Run Log</div>
   <div class="pg-sub">Log every run. Pace calculates automatically.</div>
@@ -348,7 +349,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div id="run-history"></div>
 </div>
 
-<!-- NUTRITION -->
 <div id="pg-nut" class="pg">
   <div class="pg-title">Nutrition</div>
   <div class="pg-sub">Cutting targets per phase. Calories step down as you progress and body weight drops.</div>
@@ -390,7 +390,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div class="rule"><div class="rule-n">+</div><div class="rule-t"><b>Creatine 5g daily</b> post-workout. Whey protein only if you can't hit 200g from food. Nothing else.</div></div>
 </div>
 
-<!-- WEIGHT -->
 <div id="pg-weight" class="pg">
   <div class="pg-title">Weight</div>
   <div class="pg-sub">Log your weight regularly. Morning before eating is most consistent.</div>
@@ -407,7 +406,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div id="weight-history"></div>
 </div>
 
-<!-- JOURNAL -->
 <div id="pg-journal" class="pg">
   <div class="pg-title">Journal</div>
   <div class="pg-sub">Write anything you need to remember. Notes, thoughts, how you felt.</div>
@@ -420,7 +418,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div id="journal-list"></div>
 </div>
 
-<!-- RULES -->
 <div id="pg-rules" class="pg">
   <div class="pg-title">Rules</div>
   <div class="pg-sub">Read these every Sunday night before you plan your week.</div>
@@ -465,6 +462,12 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
     <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.5"/><path d="M10 10V6.5"/><circle cx="10" cy="13.5" r=".75" fill="currentColor"/></svg></button>
 </nav>
 
+<div class="phase-popup-overlay" id="phase-overlay" onclick="closePhasePopup()"></div>
+<div class="phase-popup" id="phase-popup">
+  <div class="phase-popup-label">You've entered</div>
+  <div class="phase-popup-title" id="phase-popup-title">Phase 2</div>
+  <div class="phase-popup-sub" id="phase-popup-sub">Weeks 5–8 · Build</div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -520,8 +523,10 @@ function updateHdr(){
 }
 
 function chWk(d){
+  var oldPhase=getPhaseFromWeek(S.week||1);
   S.week=Math.max(1,Math.min(12,(S.week||1)+d));
-  S.trainPhase=getPhaseFromWeek(S.week);
+  var newPhase=getPhaseFromWeek(S.week);
+  S.trainPhase=newPhase;
   save();
   updateHdr();
   updateNutBadges();
@@ -529,6 +534,26 @@ function chWk(d){
   var twl=document.getElementById('train-wk-lbl');if(twl)twl.textContent='Week '+S.week;
   renderDayGrid();
   syncPhaseTabs();
+  if(newPhase!==oldPhase)showPhasePopup(newPhase);
+}
+function showPhasePopup(p){
+  var phases={1:{title:'Phase 1',sub:'Weeks 1–4 · Foundation'},2:{title:'Phase 2',sub:'Weeks 5–8 · Build'},3:{title:'Phase 3',sub:'Weeks 9–12 · Grind'}};
+  var ph=phases[p];if(!ph)return;
+  var popup=document.getElementById('phase-popup');
+  var overlay=document.getElementById('phase-overlay');
+  var t=document.getElementById('phase-popup-title');
+  var s=document.getElementById('phase-popup-sub');
+  if(!popup||!overlay)return;
+  t.textContent=ph.title;s.textContent=ph.sub;
+  popup.classList.add('show');overlay.classList.add('show');
+  overlay.style.pointerEvents='all';
+  setTimeout(closePhasePopup,3000);
+}
+function closePhasePopup(){
+  var popup=document.getElementById('phase-popup');
+  var overlay=document.getElementById('phase-overlay');
+  if(popup)popup.classList.remove('show');
+  if(overlay){overlay.classList.remove('show');overlay.style.pointerEvents='none';}
 }
 
 // ── DASHBOARD ──
@@ -659,7 +684,7 @@ var WD={
       {name:'Romanian Deadlift',target:'4 sets × 10',note:'',w:true},
       {name:'Leg Press',target:'3 sets × 12',note:'',w:true},
       {name:'Walking Lunges',target:'3 sets × 12 each',note:'Bodyweight or light dumbbells',w:false},
-      
+
       {name:'Calf Raises',target:'3 sets × 20',note:'',w:false}
     ]},
     {label:'Run + PT Circuit',runDay:true,ex:[
@@ -1054,7 +1079,6 @@ function renderRuns(){
 }
 function delRun(i){S.runs.splice(i,1);save();renderRuns();renderDashRuns();}
 
-
 // ── SCHEDULE ──
 var SCHED_DATA={
   1:[
@@ -1258,8 +1282,7 @@ setTimeout(function(){
   if(pg)pg.classList.add('page-slide');
 },50);
 
-
-// ── ANIMATED BACKGROUND WAVES ──
+// ── BACKGROUND WAVES ──
 window.addEventListener('load',function(){
   var c=document.getElementById('bgc');
   if(!c)return;
@@ -1268,34 +1291,41 @@ window.addEventListener('load',function(){
   function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight+100;}
   resize();
   window.addEventListener('resize',resize);
-  var waves=[
-    {y:.08,amp:22,wl:.6,spd:.0008,ph:0,op:.055,lw:1.0},
-    {y:.11,amp:16,wl:.5,spd:.0006,ph:2.1,op:.04,lw:.8},
-    {y:.14,amp:12,wl:.7,spd:.001,ph:4.3,op:.03,lw:.7},
-    {y:.35,amp:28,wl:.55,spd:.0007,ph:1.0,op:.06,lw:1.0},
-    {y:.38,amp:20,wl:.65,spd:.0009,ph:3.2,op:.045,lw:.8},
-    {y:.41,amp:14,wl:.5,spd:.0006,ph:5.5,op:.03,lw:.7},
-    {y:.62,amp:26,wl:.6,spd:.0008,ph:.7,op:.055,lw:1.0},
-    {y:.65,amp:18,wl:.7,spd:.0007,ph:2.8,op:.04,lw:.8},
-    {y:.82,amp:20,wl:.55,spd:.0006,ph:1.5,op:.045,lw:.9},
-    {y:.85,amp:13,wl:.65,spd:.0009,ph:3.9,op:.03,lw:.7}
+  // [yFrac, amp, freq1, freq2, freq3, speed, phaseOffset, opacity, lineWidth]
+  var WV=[
+    [.08, 7, 2.1, 3.7, 1.3, 0.00035, 0.0,  .055, 1.0],
+    [.11, 5, 2.5, 4.1, 1.1, 0.00028, 1.8,  .040, .80],
+    [.14, 4, 1.9, 3.3, 1.5, 0.00040, 3.6,  .028, .65],
+    [.36, 8, 2.2, 3.9, 1.2, 0.00032, 0.9,  .060, 1.0],
+    [.39, 6, 2.6, 4.3, 1.0, 0.00025, 2.7,  .045, .80],
+    [.42, 4, 2.0, 3.5, 1.4, 0.00038, 4.5,  .030, .65],
+    [.63, 7, 2.3, 4.0, 1.2, 0.00030, 1.4,  .055, 1.0],
+    [.66, 5, 2.7, 3.6, 1.1, 0.00035, 3.2,  .040, .75],
+    [.83, 6, 2.1, 3.8, 1.3, 0.00028, 0.6,  .048, .90],
+    [.86, 4, 2.4, 4.2, 1.0, 0.00033, 2.4,  .030, .65]
   ];
-  var last=0;
+  var t=0;
+  var last=null;
   function draw(ts){
     requestAnimationFrame(draw);
-    var dt=ts-last;last=ts;
+    if(last===null)last=ts;
+    var dt=ts-last;
+    last=ts;
     if(dt>100)dt=16;
+    t+=dt;
     ctx.clearRect(0,0,W,H);
-    waves.forEach(function(w){
-      w.ph+=w.spd*dt;
-      var baseY=w.y*H;
-      var freq=(2*Math.PI)/(W*w.wl);
+    WV.forEach(function(w){
+      var baseY=w[0]*H, amp=w[1], f1=w[2], f2=w[3], f3=w[4], spd=w[5], ph=w[6], op=w[7], lw=w[8];
       ctx.beginPath();
-      ctx.strokeStyle='rgba(196,164,74,'+w.op+')';
-      ctx.lineWidth=w.lw;
+      ctx.strokeStyle='rgba(196,164,74,'+op+')';
+      ctx.lineWidth=lw;
       ctx.lineJoin='round';
-      for(var x=0;x<=W;x+=3){
-        var y=baseY+Math.sin(x*freq+w.ph)*w.amp+Math.sin(x*freq*1.7+w.ph*.8)*w.amp*.35+Math.sin(x*freq*.4+w.ph*1.3)*w.amp*.2;
+      for(var x=0;x<=W;x+=4){
+        var p=x/W*Math.PI*2;
+        var y=baseY
+          +Math.sin(p*f1 + t*spd + ph)*amp
+          +Math.sin(p*f2 + t*spd*1.4 + ph+1.1)*amp*.4
+          +Math.sin(p*f3 + t*spd*.6 + ph+2.3)*amp*.2;
         if(x===0){ctx.moveTo(x,y);}else{ctx.lineTo(x,y);}
       }
       ctx.stroke();
@@ -1303,7 +1333,6 @@ window.addEventListener('load',function(){
   }
   requestAnimationFrame(draw);
 });
-
 </script>
 </body>
 </html>
