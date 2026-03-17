@@ -34,6 +34,7 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font
 .nb.on{color:var(--gold)}
 .nb.on::after{content:'';position:absolute;top:0;left:20%;right:20%;height:1px;background:var(--gold)}
 .nb-ico{font-size:17px;line-height:1}
+.nb-svg{width:18px;height:18px;display:block;margin:0 auto 1px}
 .pg{display:none;padding:16px 16px 8px}
 .pg.on{display:block}
 .pg-title{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px}
@@ -191,6 +192,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 
 <!-- DASHBOARD -->
 <div id="pg-dash" class="pg on">
+  <div id="dash-greeting" style="margin-bottom:18px;text-align:center"></div>
   <div class="pg-title">Dashboard</div>
   <div class="pg-sub">Your week at a glance. Tap a day to mark it done.</div>
   <div class="wk-nav">
@@ -303,7 +305,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
   <div class="pg-title">Nutrition</div>
   <div class="pg-sub">Cutting targets per phase. Calories step down as you progress and body weight drops.</div>
   <div class="nut-card">
-    <div class="nut-head"><div class="nut-phase-name">Phase 1 — Weeks 1–4</div><span class="badge bg-gold" id="nb1">Current</span></div>
+    <div class="nut-head"><div class="nut-phase-name">Phase 1 — Weeks 1–4</div><span class="badge bg-blue" id="nb1">Upcoming</span></div>
     <div class="nut-body">
       <div class="nut-row"><span class="nut-key">Daily Calories</span><span class="nut-val">2,100</span></div>
       <div class="nut-row"><span class="nut-key">Protein</span><span class="nut-val">200g</span></div>
@@ -357,6 +359,19 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
   <div id="weight-history"></div>
 </div>
 
+<!-- JOURNAL -->
+<div id="pg-journal" class="pg">
+  <div class="pg-title">Journal</div>
+  <div class="pg-sub">Write anything you need to remember. Notes, thoughts, how you felt.</div>
+  <div class="card">
+    <div class="fld"><div class="flbl">Date</div><input type="text" id="j-date"></div>
+    <div class="fld"><div class="flbl">Note</div><textarea id="j-note" rows="4" style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);color:var(--text);font-family:'Barlow',sans-serif;font-size:15px;padding:10px 12px;outline:none;resize:vertical;-webkit-appearance:none" placeholder="Write anything..."></textarea></div>
+    <button class="btn btn-gold" onclick="saveJournal()">Save Note</button>
+  </div>
+  <div class="sec-lbl">Notes</div>
+  <div id="journal-list"></div>
+</div>
+
 <!-- RULES -->
 <div id="pg-rules" class="pg">
   <div class="pg-title">Rules</div>
@@ -382,14 +397,33 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 </div>
 
 <nav class="bnav">
-  <button class="nb on" onclick="nav('dash',this)"><div class="nb-ico">&#9632;</div>Dash</button>
-  <button class="nb" onclick="nav('sched',this)"><div class="nb-ico">&#9776;</div>Schedule</button>
-  <button class="nb" onclick="nav('train',this)"><div class="nb-ico">&#9651;</div>Training</button>
-  <button class="nb" onclick="nav('progress',this)"><div class="nb-ico">&#8599;</div>Progress</button>
-  <button class="nb" onclick="nav('run',this)"><div class="nb-ico">&#9655;</div>Runs</button>
-  <button class="nb" onclick="nav('nut',this)"><div class="nb-ico">&#9670;</div>Nutrition</button>
-  <button class="nb" onclick="nav('weight',this)"><div class="nb-ico">&#9651;</div>Weight</button>
-  <button class="nb" onclick="nav('rules',this)"><div class="nb-ico">&#9675;</div>Rules</button>
+  <button class="nb on" onclick="nav('dash',this)">
+    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
+    Dash</button>
+  <button class="nb" onclick="nav('sched',this)">
+    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="13" rx="2"/><path d="M7 2v4M13 2v4M3 9h14"/></svg>
+    Schedule</button>
+  <button class="nb" onclick="nav('train',this)">
+    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 10h3M15 10h3M5 10a5 5 0 0010 0M5 10a5 5 0 0110 0M8 10V7m4 3V7"/></svg>
+    Training</button>
+  <button class="nb" onclick="nav('progress',this)">
+    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,14 7,9 11,12 18,5"/><polyline points="14,5 18,5 18,9"/></svg>
+    Progress</button>
+  <button class="nb" onclick="nav('run',this)">
+    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="11" r="6"/><path d="M10 8v3l2 1.5"/><path d="M8 2h4M10 2v3"/></svg>
+    Runs</button>
+  <button class="nb" onclick="nav('weight',this)">
+    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h8l1 9H5L6 7z"/><path d="M8 7V5a2 2 0 014 0v2"/></svg>
+    Weight</button>
+  <button class="nb" onclick="nav('nut',this)">
+    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3c0 0-6 4-6 8a6 6 0 0012 0c0-4-6-8-6-8z"/><path d="M10 3v14"/></svg>
+    Nutrition</button>
+  <button class="nb" onclick="nav('journal',this)">
+    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h10a1 1 0 011 1v13l-3-2-3 2-3-2-3 2V4a1 1 0 011-1z"/><path d="M8 8h4M8 11h3"/></svg>
+    Journal</button>
+  <button class="nb" onclick="nav('rules',this)">
+    <svg class="nb-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.5"/><path d="M10 10V6.5"/><circle cx="10" cy="13.5" r=".75" fill="currentColor"/></svg>
+    Rules</button>
 </nav>
 
 <div class="toast" id="toast"></div>
@@ -413,7 +447,22 @@ function nav(id,btn){
   if(id==='train'){syncPhaseTabs();renderExCards();}
   if(id==='run')renderRuns();
   if(id==='weight'){renderWeightHistory();renderDashWeightCard();}
+  if(id==='journal'){renderJournal();var jd=document.getElementById('j-date');if(jd)jd.placeholder=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'});}
   if(id==='progress'){renderStrengthChart();renderRunChart();renderWeightChart();renderAllPRs();}
+  if(id==='nut')updateNutBadges();
+}
+
+function updateNutBadges(){
+  var p=curPhase();
+  var ids=['nb1','nb2','nb3'];
+  ids.forEach(function(id,i){
+    var el=document.getElementById(id);
+    if(!el)return;
+    var phase=i+1;
+    if(phase<p){el.className='badge bg-green';el.textContent='Complete';}
+    else if(phase===p){el.className='badge bg-gold';el.textContent='Current';}
+    else{el.className='badge bg-blue';el.textContent='Upcoming';}
+  });
 }
 
 function updateHdr(){
@@ -424,14 +473,21 @@ function updateHdr(){
 
 function chWk(d){
   S.week=Math.max(1,Math.min(12,(S.week||1)+d));
-  save();updateHdr();
+  S.trainPhase=getPhaseFromWeek(S.week);
+  save();
+  updateHdr();
+  updateNutBadges();
   var wl=document.getElementById('wk-lbl');if(wl)wl.textContent='Week '+S.week;
+  var twl=document.getElementById('train-wk-lbl');if(twl)twl.textContent='Week '+S.week;
   renderDayGrid();
+  syncPhaseTabs();
 }
 
 // ── DASHBOARD ──
 function renderDash(){
   updateHdr();
+  updateNutBadges();
+  var wl=document.getElementById('wk-lbl');if(wl)wl.textContent='Week '+(S.week||1);
   renderDayGrid();
   renderPRGrid();
   renderDashRuns();
@@ -530,7 +586,7 @@ var WD={
       {name:'Romanian Deadlift',target:'4 sets × 10',note:'',w:true},
       {name:'Leg Press',target:'3 sets × 12',note:'',w:true},
       {name:'Walking Lunges',target:'3 sets × 12 each',note:'Bodyweight or light dumbbells',w:false},
-      {name:'Glute Bridge',target:'3 sets × 15',note:'1 sec pause at top',w:false},
+      
       {name:'Calf Raises',target:'3 sets × 20',note:'',w:false}
     ]},
     {label:'Run + PT Circuit',runDay:true,ex:[
@@ -544,7 +600,7 @@ var WD={
       {name:'Dumbbell Bench Press',target:'3 sets × 10',note:'',w:true},
       {name:'Goblet Squat',target:'3 sets × 12',note:'',w:true},
       {name:'Dumbbell Row',target:'3 sets × 10 each',note:'',w:true},
-      {name:'Pullup Negatives',target:'4 sets × 4',note:'Jump to bar, lower for 5 full seconds',w:false},
+      {name:'Pullup Negatives',target:'4 sets × 5',note:'Jump to top of bar, lower yourself for 5 full seconds each rep. This is how 0 pullups becomes real pullups.',w:false},
       {name:'Farmer Carries',target:'3 passes × 40m',note:'Heavy dumbbells',w:false},
       {name:'Plank',target:'3 × 40 sec',note:'',w:false}
     ]},
@@ -586,7 +642,7 @@ var WD={
       {name:'Incline Dumbbell Press',target:'3 sets × 10',note:'',w:true},
       {name:'Goblet Squat',target:'3 sets × 10',note:'',w:true},
       {name:'Dumbbell Row',target:'4 sets × 8 each',note:'Heavier than Phase 1',w:true},
-      {name:'Pullups',target:'5 sets × max',note:'Every single rep counts',w:false},
+      {name:'Pullups',target:'5 sets × max',note:'If you get even 1 real pullup, that is a win. Log the number every week — it will climb.',w:false},
       {name:'Farmer Carries',target:'4 passes × 40m',note:'Heavier than Phase 1',w:false},
       {name:'Side Plank',target:'3 × 40 sec each',note:'',w:false}
     ]},
@@ -646,14 +702,14 @@ function syncPhaseTabs(){
 }
 
 function getLogKey(){
-  var p=curPhase(),d=parseInt(document.getElementById('day-sel')?.value||0);
+  var p=curPhase(),d=parseInt((document.getElementById('day-sel')||{}).value||0);
   return 'p'+p+'d'+d+'w'+(S.week||1);
 }
 
 function renderExCards(){
   syncPhaseTabs();
   var p=curPhase();
-  var dayIdx=parseInt(document.getElementById('day-sel')?.value||0);
+  var dayIdx=parseInt((document.getElementById('day-sel')||{}).value||0);
   var day=WD[p][dayIdx];
   var el=document.getElementById('ex-cards');
   if(!el)return;
@@ -688,7 +744,7 @@ function renderExCards(){
         '<div class="set-num">'+(si+1)+'</div>'+
         (ex.w?'<input type="number" placeholder="lbs" value="'+(s.w||'')+'" inputmode="decimal" step="2.5" onchange="upd(\''+lk+'\','+ei+','+si+',\'w\',this.value)">':'')+
         '<input type="number" placeholder="reps" value="'+(s.r||'')+'" inputmode="numeric" onchange="upd(\''+lk+'\','+ei+','+si+',\'r\',this.value)">'+
-        '<button class="del-set-btn" onclick="event.stopPropagation();delSet(\''+lk+'\','+ei+','+si+')">&#215;</button>'+
+        '<button class="del-set-btn" onclick="event.stopPropagation();delSet(this)">&#215;</button>'+
       '</div>';
     }).join('');
 
@@ -734,7 +790,7 @@ function ensureLog(lk,ei,exName){
 }
 
 function getExName(ei){
-  var p=curPhase(),d=parseInt(document.getElementById('day-sel')?.value||0);
+  var p=curPhase(),d=parseInt((document.getElementById('day-sel')||{}).value||0);
   return (WD[p][d]&&WD[p][d].ex[ei])?WD[p][d].ex[ei].name:'';
 }
 
@@ -762,21 +818,50 @@ function addSet(lk,ei,hasWeight){
   row.innerHTML='<div class="set-num">'+(si+1)+'</div>'+
     (hasWeight?'<input type="number" placeholder="lbs" value="'+(newSet.w||'')+'" inputmode="decimal" step="2.5" onchange="upd(\''+lk+'\','+ei+','+si+',\'w\',this.value)">':'')+
     '<input type="number" placeholder="reps" value="'+(newSet.r||'')+'" inputmode="numeric" onchange="upd(\''+lk+'\','+ei+','+si+',\'r\',this.value)">'+
-    '<button class="del-set-btn" onclick="event.stopPropagation();delSet(\''+lk+'\','+ei+','+si+')">&#215;</button>';
+    '<button class="del-set-btn" onclick="event.stopPropagation();delSet(this)">&#215;</button>';
   container.appendChild(row);
 }
 
-function delSet(lk,ei,si){
-  if(!S.logs[lk]||!S.logs[lk]['e'+ei])return;
-  var sets=S.logs[lk]['e'+ei].sets;
+function makeSetRow(lk,ei,si,hasW,wVal,rVal){
+  var d=document.createElement('div');
+  d.className='set-row '+(hasW?'has-weight':'no-weight');
+  d.innerHTML='<div class="set-num">'+(si+1)+'</div>'+
+    (hasW?'<input type="number" placeholder="lbs" value="'+(wVal||'')+'" inputmode="decimal" step="2.5">':'')+
+    '<input type="number" placeholder="reps" value="'+(rVal||'')+'" inputmode="numeric">'+
+    '<button class="del-set-btn" onclick="event.stopPropagation();delSet(this)">&#215;</button>';
+  if(hasW){
+    d.querySelectorAll('input')[0].onchange=function(){upd(lk,ei,si,'w',this.value);};
+    d.querySelectorAll('input')[1].onchange=function(){upd(lk,ei,si,'r',this.value);};
+  } else {
+    d.querySelectorAll('input')[0].onchange=function(){upd(lk,ei,si,'r',this.value);};
+  }
+  return d;
+}
+
+function delSet(btn){
+  var row=btn.closest('.set-row');
+  var container=row.parentElement;
+  var logKey=container.id.replace('setrows-','');
+  var parts=logKey.split('-ei');
+  var lk=parts[0].replace('setrows-','');
+  // Parse lk and ei from container id: format is "setrows-{lk}-{ei}"
+  var idParts=container.id.replace('setrows-','').split('-');
+  var ei=parseInt(idParts[idParts.length-1]);
+  var lkStr=idParts.slice(0,idParts.length-1).join('-');
+  if(!S.logs[lkStr]||!S.logs[lkStr]['e'+ei])return;
+  var sets=S.logs[lkStr]['e'+ei].sets;
+  var rows=Array.from(container.querySelectorAll('.set-row'));
+  var si=rows.indexOf(row);
+  if(si===-1)return;
   sets.splice(si,1);
   if(!sets.length)sets.push({w:'',r:''});
   save();
-  renderExCards();
+  row.remove();
+  container.querySelectorAll('.set-num').forEach(function(el,i){el.textContent=i+1;});
 }
 
 function saveDay(){
-  var dayIdx=parseInt(document.getElementById('day-sel')?.value||0);
+  var dayIdx=parseInt((document.getElementById('day-sel')||{}).value||0);
   S.days['w'+(S.week||1)+'d'+dayIdx]=true;
   save();
   toast('Workout saved');
@@ -788,7 +873,7 @@ var sChart=null,rChart=null;
 var CD={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#504e49',font:{size:10,family:'Barlow'}}},y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#504e49',font:{size:10,family:'Barlow'}}}}};
 
 function renderStrengthChart(){
-  var name=document.getElementById('lift-sel')?.value||'Bench Press';
+  var name=(document.getElementById('lift-sel')||{value:'Bench Press'}).value||'Bench Press';
   var isPR=(name==='Pushups'||name==='Pullups');
   var wrap=document.getElementById('strength-chart-wrap');
   if(!wrap)return;
@@ -900,31 +985,31 @@ function delRun(i){S.runs.splice(i,1);save();renderRuns();renderDashRuns();}
 // ── SCHEDULE ──
 var SCHED_DATA={
   1:[
-    {day:'Monday',time:'11:00am · 55–65 min',badge:'bg-gold',type:'Strength',ex:'Bench Press · Dumbbell Row · Pushups (max reps) · Lat Pulldown · Shoulder Press · Dead Hang · Plank'},
-    {day:'Tuesday',time:'11:00am · 40–50 min',badge:'bg-blue',type:'Cardio',ex:'Run — log in Runs tab · Situps · Leg Raises · Hollow Hold · Mountain Climbers'},
-    {day:'Wednesday',time:'11:00am · 55–65 min',badge:'bg-gold',type:'Strength',ex:'Squat · Romanian Deadlift · Leg Press · Walking Lunges · Glute Bridge · Calf Raises'},
-    {day:'Thursday',time:'11:00am · 50–60 min',badge:'bg-green',type:'Combo',ex:'Run — log in Runs tab · PT Circuit: Pushups / Air Squats / Situps / Burpees (5 per round, +1 per week)'},
-    {day:'Friday',time:'11:00am · 60–70 min',badge:'bg-green',type:'Combo',ex:'Deadlift · Dumbbell Bench Press · Goblet Squat · Dumbbell Row · Pullup Negatives · Farmer Carries · Plank'},
-    {day:'Saturday',time:'11:00am · outdoor only',badge:'bg-blue',type:'Cardio',ex:'Long run — log in Runs tab. No headphones weeks 1–4. Target: 1 mile week 1, building to 2.5 miles by week 4.'},
-    {day:'Sunday',time:'Full rest',badge:'bg-purple',type:'Rest',ex:'No training. See Rules tab for full Sunday recovery and mobility protocol.',rest:true}
+    {day:'Monday',time:'11:00am · 55–65 min',badge:'bg-gold',type:'Strength',ex:'Bench Press 4x10 · Dumbbell Row 4x10 · Pushups 4xmax (log every set) · Lat Pulldown 4x12 · DB Shoulder Press 3x10 · Dead Hang 3x30sec · Plank 3x30sec. Add 5 lbs to bench and row each week.'},
+    {day:'Tuesday',time:'11:00am · 35–45 min',badge:'bg-blue',type:'Cardio',ex:'<b>Run/walk intervals — week by week:</b><br>Week 1: 90sec run / 2min walk x8 (~28min). Week 2: 2min run / 90sec walk x8 (~28min). Week 3: 3min run / 90sec walk x7 (~31min). Week 4: 4min run / 90sec walk x6 (~33min). Do not skip the walk breaks — they are recovery, not weakness. After run: Situps 3x12, Leg Raises 3x10, Hollow Hold 3x15sec, Mountain Climbers 3x15.'},
+    {day:'Wednesday',time:'11:00am · 55–65 min',badge:'bg-gold',type:'Strength',ex:'Squat 4x10 · Romanian Deadlift 4x10 · Leg Press 3x12 · Walking Lunges 3x10 each · Glute Bridge 3x15 · Calf Raises 3x20. Add 10 lbs to squat and RDL each week.'},
+    {day:'Thursday',time:'11:00am · 45–55 min',badge:'bg-green',type:'Combo',ex:'<b>Short run then PT circuit — week by week:</b><br>Week 1: 8min easy jog/walk, then 3 rounds: Pushups 8 / Air Squats 12 / Situps 10 / Burpees 4. Week 2: 10min, same circuit but Pushups 10 / Burpees 5. Week 3: 12min, Pushups 10 / Squats 15 / Situps 12 / Burpees 6. Week 4: 15min run/walk, full circuit x3 with Burpees 7. Rest 60sec between rounds.'},
+    {day:'Friday',time:'11:00am · 60–70 min',badge:'bg-green',type:'Combo',ex:'Deadlift 4x8 (light, form first) · DB Bench Press 3x10 · Goblet Squat 3x12 · DB Row 3x10 each · Pullup Negatives 4x4 (jump up, lower 5 full seconds — this builds real pullup strength) · Farmer Carries 3x40m · Plank 3x40sec.'},
+    {day:'Saturday',time:'11:00am · outdoor only · no headphones wks 1–4',badge:'bg-blue',type:'Cardio',ex:'<b>Long run/walk — outdoor, no headphones weeks 1–4:</b><br>Week 1: 20min total, run when you can, walk when you must. Aim for 40% running. Week 2: 22min, aim for 50% running. Week 3: 25min, aim for 60% running. Week 4: 28min, aim for 70% running. Do not worry about distance yet — time on feet is the goal. This is also mental training.'},
+    {day:'Sunday',time:'Full rest',badge:'bg-purple',type:'Rest',ex:'No training. See Rules tab for the full Sunday mobility and recovery protocol.',rest:true}
   ],
   2:[
-    {day:'Monday',time:'11:00am · 55–65 min',badge:'bg-gold',type:'Strength',ex:'Bench Press (+5–10 lbs) · Weighted Row · Pushups — 2 min timed · Assisted Pullup · Arnold Press · Dead Hang · Plank'},
-    {day:'Tuesday',time:'11:00am · 40–50 min',badge:'bg-blue',type:'Cardio',ex:'Run 1.5–2 miles continuous — log in Runs tab · Situps (2 min timed) · Leg Raises · Bicycle Crunches · Ab Wheel'},
-    {day:'Wednesday',time:'11:00am · 55–65 min',badge:'bg-gold',type:'Strength',ex:'Squat (+10 lbs) · Romanian Deadlift (+10 lbs) · Bulgarian Split Squat · Weighted Lunges · Hip Thrust · Single-Leg Calf Raise'},
-    {day:'Thursday',time:'11:00am · 50–60 min',badge:'bg-green',type:'Combo',ex:'Run — log in Runs tab · PT Circuit ×4 rounds: Pushups / Air Squats / Situps / Burpees / Pullups (max)'},
-    {day:'Friday',time:'11:00am · 60–70 min',badge:'bg-green',type:'Combo',ex:'Deadlift (+15–20 lbs) · Incline Dumbbell Press · Goblet Squat · Heavy Row · Pullups (max reps) · Farmer Carries · Side Plank'},
-    {day:'Saturday',time:'11:00am · outdoor only',badge:'bg-blue',type:'Cardio',ex:'Long run — log in Runs tab. Week 5: 2.5 miles. Week 6: 3 miles. Week 7: 3.5 miles. Week 8: 4 miles.'},
-    {day:'Sunday',time:'Full rest',badge:'bg-purple',type:'Rest',ex:'No training. See Rules tab for full Sunday recovery and mobility protocol.',rest:true}
+    {day:'Monday',time:'11:00am · 55–65 min',badge:'bg-gold',type:'Strength',ex:'Bench Press 4x10 (+10 lbs from Phase 1 total) · Weighted Row 4x10 · Pushups — 2min timed max, record weekly · Lat Pulldown 4x10 progressing weight · Arnold Press 3x10 · Dead Hang 3x45sec · Plank 3x60sec.'},
+    {day:'Tuesday',time:'11:00am · 40–50 min',badge:'bg-blue',type:'Cardio',ex:'<b>Continuous running — no walk breaks:</b><br>Week 5: 1 mile continuous at any pace. If you cannot finish, run as far as possible and note the distance. Week 6: 1.25 miles. Week 7: 1.5 miles. Week 8: 1.75 miles. Pace does not matter — completion matters. After run: Situps 2min timed (record weekly), Leg Raises 4x12, Bicycle Crunches 3x15, Ab Wheel 3x8.'},
+    {day:'Wednesday',time:'11:00am · 55–65 min',badge:'bg-gold',type:'Strength',ex:'Squat 4x8 (+15 lbs from Phase 1 total) · Romanian Deadlift 4x10 (+15 lbs) · Bulgarian Split Squat 3x8 each (replaces leg press — harder, better) · Weighted Lunges 3x10 each · Hip Thrust 4x12 · Single-Leg Calf Raise 3x12 each.'},
+    {day:'Thursday',time:'11:00am · 45–55 min',badge:'bg-green',type:'Combo',ex:'<b>Run then PT circuit — week by week:</b><br>Week 5: 12min run/walk then 3 rounds: Pushups 12 / Squats 15 / Situps 12 / Burpees 8 / Pullup negatives 3. Week 6: 15min run, same circuit x4. Week 7: 18min run, Pushups 15 / Squats 18 / Situps 15 / Burpees 10. Week 8: 20min run, circuit x4. Rest 75sec between rounds.'},
+    {day:'Friday',time:'11:00am · 60–70 min',badge:'bg-green',type:'Combo',ex:'Deadlift 4x6 (add weight from Phase 1) · Incline DB Press 3x10 · Goblet Squat 3x10 · DB Row 4x8 each · Pullups or negatives 5xmax (even 1 real rep counts — if you get one, celebrate it) · Farmer Carries 4x40m heavier · Side Plank 3x30sec each.'},
+    {day:'Saturday',time:'11:00am · outdoor only',badge:'bg-blue',type:'Cardio',ex:'<b>Continuous long run — building real distance:</b><br>Week 5: 1.5 miles no stops. Week 6: 2 miles no stops — this is your first real milestone. Week 7: 2.25 miles. Week 8: 2.5 miles. If you cannot complete the distance, walk the remainder and try again the following week before progressing. Log every run with distance and time.'},
+    {day:'Sunday',time:'Full rest',badge:'bg-purple',type:'Rest',ex:'No training. See Rules tab for the full Sunday mobility and recovery protocol.',rest:true}
   ],
   3:[
-    {day:'Monday',time:'11:00am · 60–70 min',badge:'bg-gold',type:'Strength',ex:'Bench Press — heavy 5×6 · Pullups (5×max) · Pushups — 2 min test · Incline Press · Cable Row · Pike Press · Plank 3×90 sec'},
-    {day:'Tuesday',time:'11:00am · 40–50 min',badge:'bg-blue',type:'Cardio',ex:'Tempo run 2 miles — log in Runs tab · Situps — 2 min test · Leg Raises · V-Ups · Hollow Rocks'},
-    {day:'Wednesday',time:'11:00am · 60–70 min',badge:'bg-gold',type:'Strength',ex:'Squat — heavy 5×5 · Romanian Deadlift · Bulgarian Split Squat · Hip Thrust (barbell) · Weighted Step-Ups · Single-Leg Calf Raise'},
-    {day:'Thursday',time:'11:00am · 60 min',badge:'bg-green',type:'Combo',ex:'Run 2 miles then Military Circuit ×5 rounds: Pushups 20 / Situps 20 / Air Squats 20 / Pullups max / Burpees 10'},
-    {day:'Friday',time:'11:00am · 65–75 min',badge:'bg-green',type:'Combo',ex:'Deadlift — heavy 5×5 · Bench Press · Overhead Press · Pullups (5×max) · Farmer Carries · Weighted Dips'},
-    {day:'Saturday',time:'11:00am · outdoor only',badge:'bg-blue',type:'Cardio',ex:'Week 9: 4 miles. Week 10: 4.5 miles. Week 11: 5 miles. Week 12: timed 3-mile test — goal sub-27 minutes.'},
-    {day:'Sunday',time:'Full rest',badge:'bg-purple',type:'Rest',ex:'No training. See Rules tab for full Sunday recovery and mobility protocol.',rest:true}
+    {day:'Monday',time:'11:00am · 60–70 min',badge:'bg-gold',type:'Strength',ex:'Bench Press 5x6 heavy · Pullups 5xmax (by now you should have 1–4 reps — grind every set) · Pushups 2min timed test, target 40+ · Incline DB Press 4x10 · Cable Row 4x10 · Pike Press 3x8 · Plank 3x75sec.'},
+    {day:'Tuesday',time:'11:00am · 45–55 min',badge:'bg-blue',type:'Cardio',ex:'<b>Tempo run — controlled discomfort:</b><br>All weeks: 2 miles at a pace that feels hard but sustainable. Not a sprint, not a jog — uncomfortably fast. After: Situps 2min timed test (target 45+ by wk 12), Leg Raises 4x15, V-Ups 3x10, Hollow Rocks 3x15.'},
+    {day:'Wednesday',time:'11:00am · 60–70 min',badge:'bg-gold',type:'Strength',ex:'Squat 5x5 heavy · Romanian Deadlift 4x8 heavy · Bulgarian Split Squat 4x8 each · Hip Thrust 4x12 barbell · Weighted Step-Ups 3x10 each · Single-Leg Calf Raise 4x12 each.'},
+    {day:'Thursday',time:'11:00am · 55–65 min',badge:'bg-green',type:'Combo',ex:'<b>Run then military circuit — week by week:</b><br>Week 9: 1.5mi run then 4 rounds: Pushups 15 / Situps 15 / Squats 20 / Pullups max / Burpees 8. Week 10: 1.75mi run, 4 rounds bumping all by 2 reps. Week 11: 2mi run, 5 rounds. Week 12: 2mi run, 5 rounds max effort — this is your final test. Rest 90sec between rounds.'},
+    {day:'Friday',time:'11:00am · 65–75 min',badge:'bg-green',type:'Combo',ex:'Deadlift 5x5 heavy · Bench Press 4x8 · Overhead Press 3x8 · Pullups 5xmax (target 5–8 reps per set by wk 12) · Farmer Carries 5x40m heavy · Weighted Dips 4x8.'},
+    {day:'Saturday',time:'11:00am · outdoor only',badge:'bg-blue',type:'Cardio',ex:'<b>Long run — the final push:</b><br>Week 9: 3 miles — your first 3-mile run. Go slow, just finish. Week 10: 3.25 miles. Week 11: 3.5 miles easy. Week 12: TIMED 3-mile test. Goal: sub-30 minutes (stretch goal sub-28). Your training distance exceeds 3 miles now so race day will feel shorter than your long runs.'},
+    {day:'Sunday',time:'Full rest',badge:'bg-purple',type:'Rest',ex:'No training. See Rules tab for the full Sunday mobility and recovery protocol.',rest:true}
   ]
 };
 var schedPhase=null;
@@ -1013,14 +1098,85 @@ function renderWeightChart(){
   });
 }
 
+// ── GREETING ──
+var GREETINGS=[
+  "Consistency beats intensity every time.",
+  "The work does not do itself.",
+  "Show up today. That is the whole job.",
+  "Every session counts. Every single one.",
+  "Your future self is watching.",
+  "Pain is temporary. Quitting lasts forever.",
+  "One more rep. One more mile. One more week.",
+  "The only bad workout is the one that did not happen.",
+  "Discipline is doing it when you do not feel like it.",
+  "Nobody who ever gave their best regretted it.",
+  "Small progress is still progress.",
+  "You do not have to be great to start. Start to be great.",
+  "The body achieves what the mind believes.",
+  "Earn it today.",
+  "Do not stop when you are tired. Stop when you are done.",
+  "Your friend is grinding right now. Match it.",
+  "Hard days build strong people.",
+  "Sweat now. Shine later.",
+  "You are 12 weeks away from a different body.",
+  "Fall in love with the process.",
+  "Champions train. Legends grind.",
+  "Make today count.",
+  "The pain you feel today is the strength you feel tomorrow.",
+  "Push harder than yesterday.",
+  "Prove them wrong. Prove yourself right.",
+  "One day or day one. You decide.",
+  "Iron sharpens iron.",
+  "Embrace the grind.",
+  "No shortcuts. No excuses. No regrets.",
+  "Be the person your future self needs you to be."
+];
+function renderGreeting(){
+  var el=document.getElementById('dash-greeting');if(!el)return;
+  var idx=new Date().getDate()%GREETINGS.length;
+  var gStyle='font-family:Barlow Condensed,sans-serif;font-size:30px;font-weight:900;letter-spacing:.04em;color:var(--text);line-height:1.1;margin-bottom:4px;text-align:center';
+  var sStyle='font-size:13px;color:var(--text3);text-align:center;line-height:1.5';
+  el.innerHTML='<div style="'+gStyle+'">Hello J.</div><div style="'+sStyle+'">'+GREETINGS[idx]+'</div>';
+}
+
+// ── JOURNAL ──
+function saveJournal(){
+  var note=document.getElementById('j-note').value.trim();
+  var date=document.getElementById('j-date').value||new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  if(!note){toast('Write something first','var(--red)');return;}
+  if(!S.journal)S.journal=[];
+  S.journal.unshift({date:date,note:note});
+  if(S.journal.length>100)S.journal=S.journal.slice(0,100);
+  save();
+  document.getElementById('j-note').value='';
+  toast('Note saved');
+  renderJournal();
+}
+function renderJournal(){
+  var el=document.getElementById('journal-list');if(!el)return;
+  if(!S.journal||!S.journal.length){el.innerHTML='<div class="empty">No notes yet. Write something.</div>';return;}
+  el.innerHTML=S.journal.map(function(j,i){
+    return '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:13px 15px;margin-bottom:8px">'+
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">'+
+        '<div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text3)">'+j.date+'</div>'+
+        '<button onclick="delJournal('+i+')" style="background:none;border:none;color:var(--text3);font-size:18px;cursor:pointer;line-height:1">&#215;</button>'+
+      '</div>'+
+      '<div style="font-size:14px;color:var(--text);line-height:1.65;white-space:pre-wrap">'+j.note+'</div>'+
+    '</div>';
+  }).join('');
+}
+function delJournal(i){S.journal.splice(i,1);save();renderJournal();}
+
 // ── INIT ──
 S.trainPhase=S.trainPhase||getPhaseFromWeek(S.week||1);
 if(!S.weights)S.weights=[];
-// Set auto date placeholders
+if(!S.journal)S.journal=[];
 var _today=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'});
-['r-date','w-date'].forEach(function(id){var el=document.getElementById(id);if(el)el.placeholder=_today;});
+['r-date','w-date','j-date'].forEach(function(id){var el=document.getElementById(id);if(el)el.placeholder=_today;});
 updateHdr();
+renderGreeting();
 renderDash();
+updateNutBadges();
 renderDashWeightCard();
 syncPhaseTabs();
 schedPhase=getPhaseFromWeek(S.week||1);setSchedPhase(schedPhase);
